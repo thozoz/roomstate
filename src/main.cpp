@@ -88,7 +88,17 @@ bool bitBangAck(uint8_t addr) {
 // Wire is never initialized until the display is actually found.
 // This prevents peripheral operations on an empty bus and avoids Wire.end()/begin() loops.
 bool tryInitOled() {
-    if (!bitBangAck(OLED_ADDR)) return false;
+    bbRelease(I2C_SDA); bbRelease(I2C_SCL); delayMicroseconds(50);
+    int sda = digitalRead(I2C_SDA);
+    int scl = digitalRead(I2C_SCL);
+    if (!sda || !scl) {
+        Serial.printf("[I2C Bus Error] SDA=%d, SCL=%d (Line stuck LOW! Check loose wire or short)\n", sda, scl);
+        return false;
+    }
+    if (!bitBangAck(OLED_ADDR)) {
+        Serial.println("[I2C Probe] SDA & SCL HIGH, but device 0x3C gave no ACK (unpowered or wrong address)");
+        return false;
+    }
 
     Wire.begin(I2C_SDA, I2C_SCL);
     Wire.setClock(100000);
