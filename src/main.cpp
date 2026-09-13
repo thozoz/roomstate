@@ -94,7 +94,7 @@ bool tryInitOled() {
     Wire.setClock(100000);
     Wire.setTimeOut(50);
     if (!display.begin(SSD1306_SWITCHCAPVCC, OLED_ADDR)) return false;
-    display.setRotation(2);   // mounted upside down in enclosure
+    display.setRotation(0);   // display rotated 180 degrees (default orientation)
     return true;
 }
 
@@ -106,6 +106,20 @@ void drawCentered(const char* text, uint8_t size, int16_t y) {
     display.getTextBounds(text, 0, 0, &x1, &y1, &w, &h);
     display.setCursor((SCREEN_WIDTH - w) / 2, y);
     display.print(text);
+}
+
+// Activity indicator: small bar moving down one step on each refresh along the right edge.
+// Moves even when temp/humidity remain constant - if it stops, you know immediately
+// that the display is frozen (e.g. I2C disconnected).
+// Size 3 text at widest ("-10.5C", 6 chars = 108px) centered leaves ~10px padding on each side,
+// bar at x=125..127 never overlaps text.
+#define HEARTBEAT_STEPS 8
+uint8_t heartbeatFrame = 0;
+
+static void drawHeartbeat() {
+    int16_t y = (heartbeatFrame % HEARTBEAT_STEPS) * (SCREEN_HEIGHT / HEARTBEAT_STEPS);
+    display.fillRect(125, y, 3, 6, SSD1306_WHITE);
+    heartbeatFrame++;
 }
 
 // Screen layout (128x64): temperature and humidity centered full screen
@@ -125,6 +139,8 @@ void drawReadings(float temp, float hum, bool ok) {
         drawCentered(tempStr, 3, 4);
         drawCentered(humStr, 3, 36);
     }
+
+    drawHeartbeat();
     display.display();
 }
 

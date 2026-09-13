@@ -1,3 +1,5 @@
 .pio/
 .vscode/
 include/secrets.h
+backup/
+compile_commands.json
