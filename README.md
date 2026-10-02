@@ -1,12 +1,27 @@
-# The Home Thingy — ESP32-C3 Temperature/Humidity Monitor
+# RoomState — ESP32-C3 Temperature/Humidity Monitor
 
-Battery-powered live temperature and humidity display with OLED screen.
+A compact, battery-powered ambient temperature and humidity monitor featuring an ESP32-C3 Super Mini, DHT22 sensor, and a 0.96" SSD1306 OLED display. A custom two-part 3D-printed enclosure is designed; physical build photos will follow.
+
+When operating on battery power, the ESP32-C3 enters light sleep between three-second sensor update cycles, allowing the OLED to retain its display buffer while reducing CPU consumption. Light sleep automatically disengages whenever a USB serial host is connected so uploading, monitoring, and debugging continue normally.
 
 - **Board:** ESP32-C3 Super Mini (native USB-Serial/JTAG, **no** USB-UART bridge chip)
-- **Sensor:** DHT22
+- **Sensor:** DHT22 (isolated thermal chamber)
 - **Display:** 0.96" 128x64 OLED, SSD1306, I2C, address `0x3C`
-- **Charging:** TP4056 (with protection circuit, DW01+8205A) + Li-ion battery
+- **Power & Charging:** 18650 Li-ion cell + TP4056 (with DW01A/8205A protection circuit) + KCD1 rocker switch
+- **Enclosure:** Custom 3D-printed two-part desk enclosure (Bambu Lab P2S, PLA)
 - **Framework:** PlatformIO + Arduino framework, flashed via esptool
+
+---
+
+## Physical Build & Enclosure Photos
+
+*(Physical photographs of the 3D-printed assembly will be added here upon completion of the print and final bench assembly)*
+
+1. **Fully Assembled Enclosure (Desk View):** Front-top view showing the top-facing 0.96" OLED display cutout, front-mounted KCD1 rocker switch, and clean exterior profile.
+2. **Internal Component Arrangement:** Overhead view of the base cavity showing the ESP32-C3 Super Mini on snap-fit rails, 18650 battery cradle, and point-to-point wire harness.
+3. **Sensor Thermal Isolation Chamber:** Detail of the dedicated DHT22 compartment, isolating divider wall, side intake grille, and lid chimney vents.
+4. **Power & Charger Subsystem:** Close-up of the TP4056 USB-C charging module held by snap-fit clips with its recessed port cutout.
+5. **Base & Lid Fitment:** Profile view showing the 1.6 mm walls, interlocking lid lip, and M2 fastening bosses.
 
 ---
 
@@ -14,9 +29,9 @@ Battery-powered live temperature and humidity display with OLED screen.
 
 | Component | ESP32-C3 Pin |
 |---|---|
-| DHT22 DATA | GPIO1 |
-| OLED SDA | GPIO6 |
-| OLED SCL | GPIO7 |
+| DHT22 DATA | GPIO7 |
+| OLED SDA | GPIO0 |
+| OLED SCL | GPIO10 |
 | OLED VCC / GND | **Directly from ESP 3.3V / GND** |
 | DHT22 VCC / GND | **Directly from ESP 3.3V / GND** |
 
@@ -193,3 +208,5 @@ $p.ReadExisting(); $p.Close()
 | `platformio.ini` | Board definition, USB CDC flags, libraries |
 | `include/secrets.h` | WiFi credentials — **gitignored**, not committed |
 | `include/secrets.h.example` | Template for WiFi credentials |
+| `ENCLOSURE.md` | 3D-printed enclosure design and dimension specifications |
+| `enclosure/` | 3D model exports (Base.stl, Lid.stl, STEP assemblies) |

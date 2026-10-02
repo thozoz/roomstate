@@ -5,6 +5,7 @@
 #include <Adafruit_SSD1306.h>
 #include <WiFi.h>
 #include <esp_bt.h>
+#include <esp_sleep.h>
 
 // WiFi/NTP clock feature completely disabled. On this ESP32-C3 Super Mini
 // module, WiFi connection attempts persistently failed (multiple networks and
@@ -14,10 +15,10 @@
 // ---- Pin definitions (ESP32-C3 Super Mini) ----
 // Strapping pins (GPIO2/8/9) are avoided. GPIO8 is also the onboard LED.
 // GPIO5 has internal board leakage (even on a breadboard) - do not use.
-#define DHT_PIN     1      // DHT22 data (module has internal pull-up)
+#define DHT_PIN     7      // DHT22 data (module has internal pull-up)
 #define DHT_TYPE    DHT22
-#define I2C_SDA     6      // OLED SDA
-#define I2C_SCL     7      // OLED SCL
+#define I2C_SDA     0      // OLED SDA
+#define I2C_SCL     10     // OLED SCL
 
 // ---- OLED ----
 #define SCREEN_WIDTH  128
@@ -33,6 +34,7 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET, 100000U
 DHT dht(DHT_PIN, DHT_TYPE);
 
 const unsigned long READ_INTERVAL_MS = 3000;   // DHT22 can be sampled at ~0.5Hz max
+const unsigned long USB_DEBUG_GRACE_MS = 15000; // allow native USB time to enumerate after boot
 unsigned long lastReadMillis = 0;
 
 // Periodic retry if OLED is missing - allows the display to come online
@@ -104,7 +106,7 @@ bool tryInitOled() {
     Wire.setClock(100000);
     Wire.setTimeOut(50);
     if (!display.begin(SSD1306_SWITCHCAPVCC, OLED_ADDR)) return false;
-    display.setRotation(0);   // display rotated 180 degrees (default orientation)
+    display.setRotation(2);   // rotate display 180 degrees
     return true;
 }
 
@@ -177,6 +179,7 @@ void setup() {
         display.display();
     }
 
+    delay(1500);   // DHT22 needs ~1 s after board power-up before the first read
     dht.begin();
 }
 
@@ -209,5 +212,25 @@ void loop() {
         }
 
         drawReadings(lastTemp, lastHum, lastReadOk);
+    }
+
+    // On battery, sleep until the next scheduled sensor read or OLED retry.
+    // The SSD1306 retains its current image while the ESP32-C3 is asleep.
+    // Keep the CPU awake while a USB serial host is connected for reliable debugging.
+    if (millis() >= USB_DEBUG_GRACE_MS && !Serial) {
+        now = millis();
+        unsigned long untilRead = (now - lastReadMillis >= READ_INTERVAL_MS)
+            ? 1
+            : READ_INTERVAL_MS - (now - lastReadMillis);
+        unsigned long sleepMs = untilRead;
+
+        if (!oledOk) {
+            long untilRetry = (long)(nextOledRetryMillis - now);
+            unsigned long retryMs = untilRetry <= 0 ? 1 : (unsigned long)untilRetry;
+            if (retryMs < sleepMs) sleepMs = retryMs;
+        }
+
+        esp_sleep_enable_timer_wakeup((uint64_t)sleepMs * 1000ULL);
+        esp_light_sleep_start();
     }
 }
