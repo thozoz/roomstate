@@ -150,20 +150,6 @@ Data sent before the USB-CDC host connects is lost. Rather than printing diagnos
 
 ---
 
-## Unresolved: WiFi
-
-WiFi never successfully associated. Attempted troubleshooting:
-
-- Password verified from saved Windows network profile
-- Router security verified as WPA2-PSK (CCMP)
-- `WiFi.scanNetworks()` successfully discovers target SSID (radio functions)
-- Router logs show one past successful association
-- `erase_flash`, full power cycle, second router — none resolved it
-
-Root cause unconfirmed (suspected antenna / hardware limitation). Feature disabled via `#define ENABLE_WIFI_CLOCK 0`, code preserved — set to 1 to re-enable.
-
----
-
 ## Physical Assembly Notes
 
 - Do not route signal and power through perfboard copper tracks. Run wires **directly to ESP pins**, using the perfboard purely as a mechanical carrier.
@@ -206,7 +192,5 @@ $p.ReadExisting(); $p.Close()
 |---|---|
 | `src/main.cpp` | Main firmware |
 | `platformio.ini` | Board definition, USB CDC flags, libraries |
-| `include/secrets.h` | WiFi credentials — **gitignored**, not committed |
-| `include/secrets.h.example` | Template for WiFi credentials |
 | `ENCLOSURE.md` | 3D-printed enclosure design and dimension specifications |
 | `enclosure/` | 3D model exports (Base.stl, Lid.stl, STEP assemblies) |

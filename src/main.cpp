@@ -3,14 +3,8 @@
 #include <DHT.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-#include <WiFi.h>
 #include <esp_bt.h>
 #include <esp_sleep.h>
-
-// WiFi/NTP clock feature completely disabled. On this ESP32-C3 Super Mini
-// module, WiFi connection attempts persistently failed (multiple networks and
-// flash-erases were tried, none resolved it). Set to 1 to re-enable.
-#define ENABLE_WIFI_CLOCK 0
 
 // ---- Pin definitions (ESP32-C3 Super Mini) ----
 // Strapping pins (GPIO2/8/9) are avoided. GPIO8 is also the onboard LED.
@@ -160,8 +154,7 @@ void setup() {
     Serial.begin(115200);
     Serial.println("=== Boot started ===");
 
-    // Disable WiFi and BLE to save battery
-    WiFi.mode(WIFI_OFF);
+    // Disable BLE to save battery
     btStop();
     esp_bt_controller_disable();
 
