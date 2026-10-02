@@ -164,21 +164,23 @@ Data sent before the USB-CDC host connects is lost. Rather than printing diagnos
 
 ## Useful Commands
 
+Find the device port with `pio device list`. Replace `COMx` below with your port (for example, `COM4` on Windows or `/dev/ttyACM0` on Linux). PlatformIO upload discovers the port automatically.
+
 ```bash
 # Build and upload
 pio run -t upload
 
 # Reset chip (if stuck in download mode)
-python -m esptool --port COM3 --after hard-reset chip-id
+python -m esptool --port COMx --after hard-reset chip-id
 
 # Full flash erase
-python -m esptool --port COM3 erase_flash
+python -m esptool --port COMx erase_flash
 ```
 
 Reading serial output with PowerShell (more deterministic than `pio device monitor` — manual DTR/RTS control):
 
 ```powershell
-$p = New-Object System.IO.Ports.SerialPort COM3,115200,None,8,one
+$p = New-Object System.IO.Ports.SerialPort COMx,115200,None,8,one
 $p.Open(); $p.DtrEnable=$true; $p.RtsEnable=$false
 Start-Sleep -Milliseconds 5000
 $p.ReadExisting(); $p.Close()
