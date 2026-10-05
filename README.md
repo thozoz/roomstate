@@ -1,6 +1,6 @@
 # RoomState — ESP32-C3 Temperature/Humidity Monitor
 
-A compact, battery-powered ambient temperature and humidity monitor featuring an ESP32-C3 Super Mini, DHT22 sensor, and a 0.96" SSD1306 OLED display. A custom two-part 3D-printed enclosure is designed; physical build photos will follow.
+A compact, battery-powered ambient temperature and humidity monitor featuring an ESP32-C3 Super Mini, DHT22 sensor, and a 0.96" SSD1306 OLED display. The monitor is housed in a custom two-part 3D-printed enclosure; build photos are shown below.
 
 When operating on battery power, the ESP32-C3 enters light sleep between three-second sensor update cycles, allowing the OLED to retain its display buffer while reducing CPU consumption. Light sleep automatically disengages whenever a USB serial host is connected so uploading, monitoring, and debugging continue normally.
 
@@ -15,13 +15,31 @@ When operating on battery power, the ESP32-C3 enters light sleep between three-s
 
 ## Physical Build & Enclosure Photos
 
-*(Physical photographs of the 3D-printed assembly will be added here upon completion of the print and final bench assembly)*
+### 1. Assembled Monitor
 
-1. **Fully Assembled Enclosure (Desk View):** Front-top view showing the top-facing 0.96" OLED display cutout, front-mounted KCD1 rocker switch, and clean exterior profile.
-2. **Internal Component Arrangement:** Overhead view of the base cavity showing the ESP32-C3 Super Mini on snap-fit rails, 18650 battery cradle, and point-to-point wire harness.
-3. **Sensor Thermal Isolation Chamber:** Detail of the dedicated DHT22 compartment, isolating divider wall, side intake grille, and lid chimney vents.
-4. **Power & Charger Subsystem:** Close-up of the TP4056 USB-C charging module held by snap-fit clips with its recessed port cutout.
-5. **Base & Lid Fitment:** Profile view showing the 1.6 mm walls, interlocking lid lip, and M2 fastening bosses.
+The assembled black enclosure with the OLED displaying temperature and humidity, the rocker switch, and the ventilation grille.
+
+![Assembled RoomState monitor displaying temperature and humidity](docs/images/roomstate-assembled.png)
+
+### 2. Printed Lid
+
+The lid before assembly, showing the OLED opening, ventilation slots, and screw holes.
+
+![Black 3D-printed lid with OLED opening and ventilation slots](docs/images/roomstate-lid.png)
+
+### 3. Base Interior
+
+The empty base, showing the internal mounting features, compartment divider, and ventilation openings.
+
+![Empty 3D-printed base with mounting features and compartment divider](docs/images/roomstate-base-interior.png)
+
+### 4. Internal Electronics — Photo Coming Soon
+
+*Reserved for a photo of the open enclosure showing the installed electronics and wiring.*
+
+<!-- Add the fourth photo here once it has been taken:
+![Installed electronics and wiring inside the RoomState enclosure](docs/images/roomstate-electronics.png)
+-->
 
 ---
 
