@@ -19,19 +19,19 @@ When operating on battery power, the ESP32-C3 enters light sleep between three-s
 
 The assembled black enclosure with the OLED displaying temperature and humidity, the rocker switch, and the ventilation grille.
 
-![Assembled RoomState monitor displaying temperature and humidity](docs/images/roomstate-assembled.png)
+<img src="docs/images/roomstate-assembled.png" alt="Assembled RoomState monitor displaying temperature and humidity" width="645">
 
 ### 2. Printed Lid
 
 The lid before assembly, showing the OLED opening, ventilation slots, and screw holes.
 
-![Black 3D-printed lid with OLED opening and ventilation slots](docs/images/roomstate-lid.png)
+<img src="docs/images/roomstate-lid.png" alt="Black 3D-printed lid with OLED opening and ventilation slots" width="645">
 
 ### 3. Base Interior
 
 The empty base, showing the internal mounting features, compartment divider, and ventilation openings.
 
-![Empty 3D-printed base with mounting features and compartment divider](docs/images/roomstate-base-interior.png)
+<img src="docs/images/roomstate-base-interior.png" alt="Empty 3D-printed base with mounting features and compartment divider" width="645">
 
 ### 4. Internal Electronics — Photo Coming Soon
 
