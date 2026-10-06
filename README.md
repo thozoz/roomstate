@@ -33,13 +33,17 @@ The empty base, showing the internal mounting features, compartment divider, and
 
 <img src="docs/images/roomstate-base-interior.png" alt="Empty 3D-printed base with mounting features and compartment divider" width="645">
 
-### 4. Internal Electronics — Photo Coming Soon
+### 4. Internal Electronics — Angled View
 
-*Reserved for a photo of the open enclosure showing the installed electronics and wiring.*
+The open enclosure showing the wiring, perfboard, and the OLED module mounted behind the lid.
 
-<!-- Add the fourth photo here once it has been taken:
-![Installed electronics and wiring inside the RoomState enclosure](docs/images/roomstate-electronics.png)
--->
+<img src="docs/images/roomstate-electronics-angle.jpg" alt="Angled view of the open RoomState enclosure, wiring, and lid-mounted OLED module" width="645">
+
+### 5. Internal Electronics — Overhead View
+
+A closer overhead view of the 18650 cell, charging module, ESP32-C3, DHT22 sensor, and wiring.
+
+<img src="docs/images/roomstate-electronics-overhead.jpg" alt="Overhead view of the installed battery, charging module, ESP32-C3, DHT22 sensor, and wiring" width="645">
 
 ---
 
