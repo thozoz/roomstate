@@ -226,3 +226,9 @@ $p.ReadExisting(); $p.Close()
 | `platformio.ini` | Board definition, USB CDC flags, libraries |
 | `ENCLOSURE.md` | 3D-printed enclosure design and dimension specifications |
 | `enclosure/` | 3D model exports (Base.stl, Lid.stl, STEP assemblies) |
+
+## License
+
+- **Firmware** (`src/`, `platformio.ini`): [MIT License](LICENSE) © 2026 thozoz.
+- **Enclosure designs** (`Base`, `Lid`, spacers): [CC BY 4.0](licenses/CC-BY-4.0.txt) © 2026 thozoz.
+- **Reference components:** Third-party electronic models included in `enclosure/RoomState_enclosure.step` are for fitment reference only and belong to their respective creators. See [enclosure/LICENSE.md](enclosure/LICENSE.md).
